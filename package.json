@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start:dev": "nodemon server.js"
   },
   "repository": {
     "type": "git",
@@ -16,5 +17,8 @@
   "bugs": {
     "url": "https://github.com/GuilhermeArimatea/course-nodejs-api-rest-express-mongodb-2025/issues"
   },
-  "homepage": "https://github.com/GuilhermeArimatea/course-nodejs-api-rest-express-mongodb-2025#readme"
+  "homepage": "https://github.com/GuilhermeArimatea/course-nodejs-api-rest-express-mongodb-2025#readme",
+  "devDependencies": {
+    "nodemon": "^3.1.9"
+  }
 }
