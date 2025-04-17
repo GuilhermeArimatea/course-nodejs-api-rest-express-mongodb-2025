@@ -34,7 +34,7 @@ app.post("/livros", (req, res) => {
 });
 
 app.put("/livros/:id", (req, res) => {
-    const id = parseInt(req.params.id);
+    const { id } = parseInt(req.params);
     const body = req.body;
     const index = searchBook(id);
     if (!index) {
@@ -42,6 +42,16 @@ app.put("/livros/:id", (req, res) => {
     }
     books[index].title = body.title;
     res.status(200).json(books[index]);
+});
+
+app.delete("/livros/:id", (req, res) => {
+    const { id } = req.params;
+    const index = searchBook(id);
+    if (!index) {
+        return res.status(204).json({ message: "Book not found." });
+    }
+    books.splice(index, 1);
+    res.status(200).json({ message: `Book ${index} deleted.` });
 });
 
 function searchBook(id) {
