@@ -1,19 +1,19 @@
 import express from "express";
 import db from "./config/dbConnect.js";
+import book from "./models/Book.js";
 
-db.once("open", () => { });
+db.on("error", console.log.bind(console, "Connection error:"));
+db.once("open", () => {
+    console.log("Connected to the database.");
+});
 
 const app = express();
 
 app.use(express.json());
 
-const books = [
-    { id: 1, title: "Lord Of the Rings", author: "J.R.R. Tolkien" },
-    { id: 2, title: "Harry Potter", author: "J.K. Rowling" },
-];
-
-app.get("/", (req, res) => {
-    res.status(200).send("Curso de Node.js");
+app.get("/", async (req, res) => {
+    const books = await book.find();
+    res.status(200).json(books);
 });
 
 app.get("/livros", (req, res) => {
