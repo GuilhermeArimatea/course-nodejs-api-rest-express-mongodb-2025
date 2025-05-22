@@ -1,4 +1,7 @@
 import express from "express";
+import db from "./config/dbConnect.js";
+
+db.once("open", () => { });
 
 const app = express();
 
