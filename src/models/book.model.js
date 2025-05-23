@@ -17,6 +17,8 @@ const bookSchema = new moongose.Schema({
         type: Number,
         required: true,
     },
+}, {
+    timestamps: true,
 });
 
 
