@@ -1,6 +1,9 @@
 import moongose from "mongoose";
 
 const bookSchema = new moongose.Schema({
+    id: {
+        type: String,
+    },
     title: {
         type: String,
         required: true,
