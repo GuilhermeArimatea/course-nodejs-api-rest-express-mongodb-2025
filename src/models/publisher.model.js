@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const authorSchema = new mongoose.Schema({
+const publisherSchema = new mongoose.Schema({
     id: {
         type: String,
     },
@@ -10,13 +10,18 @@ const authorSchema = new mongoose.Schema({
     },
     nationality: {
         type: String,
-    }
+    },
+    cnpj: {
+        type: String,
+        required: true,
+        unique: true,
+    },
 }, {
     versionKey: false,
     timestamps: true,
 });
 
 
-const Author = mongoose.model('author', authorSchema)
+const Publisher = mongoose.model('publisher', publisherSchema)
 
-export default Author;
+export default Publisher;

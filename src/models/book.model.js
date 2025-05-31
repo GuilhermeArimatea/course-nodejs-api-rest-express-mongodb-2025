@@ -1,6 +1,6 @@
-import moongose from "mongoose";
+import mongoose from "mongoose";
 
-const bookSchema = new moongose.Schema({
+const bookSchema = new mongoose.Schema({
     id: {
         type: String,
     },
@@ -9,11 +9,13 @@ const bookSchema = new moongose.Schema({
         required: true,
     },
     author: {
-        type: String,
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'author',
         required: true,
     },
     publisher: {
-        type: String,
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'publisher',
         required: true,
     },
     numberOfPages: {
@@ -25,6 +27,6 @@ const bookSchema = new moongose.Schema({
 });
 
 
-const Book = moongose.model('book', bookSchema)
+const Book = mongoose.model('book', bookSchema)
 
 export default Book;

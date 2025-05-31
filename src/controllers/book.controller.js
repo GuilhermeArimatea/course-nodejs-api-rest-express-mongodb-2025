@@ -1,10 +1,13 @@
-import books from "../models/book.model.js";
+import Book from "../models/book.model.js";
 
-class BooksController {
+class BookController {
     static findBooks = async (req, res) => {
         try {
-            const booksList = await books.find();
-            res.status(200).json(booksList);
+            const bookList = await Book.find()
+                .populate('author', 'name')
+                .populate('publisher', 'name')
+                .exec();
+            res.status(200).json(bookList);
         } catch (err) {
             res.status(500).json({ message: err.message });
         }
@@ -14,7 +17,9 @@ class BooksController {
         try {
             const id = req.params.id;
 
-            const book = await books.findById(id);
+            const book = await Book.findById(id)
+                .populate('author', 'name')
+                .exec();
             if (!book) {
                 return res.status(404).json({ message: "Book not found." });
             }
@@ -28,7 +33,7 @@ class BooksController {
         try {
             const body = req.body;
 
-            const newBook = new books(body);
+            const newBook = new Book(body);
 
             const insertedBook = await newBook.save();
             res.status(201).json(insertedBook);
@@ -42,7 +47,7 @@ class BooksController {
             const id = req.params.id;
             const body = req.body;
 
-            const updatedBook = await books.findByIdAndUpdate(
+            const updatedBook = await Book.findByIdAndUpdate(
                 id,
                 { $set: body },
                 { new: true, runValidators: true }
@@ -61,15 +66,15 @@ class BooksController {
         try {
             const id = req.params.id;
 
-            const deletedBook = await books.findByIdAndDelete(id);
+            const deletedBook = await Book.findByIdAndDelete(id);
             if (!deletedBook) {
                 return res.status(400).json({ message: "Book not found." });
             }
-            res.status(200).json({ message: `Book ${id} deleted.` });
+            res.status(200).json({ message: `Book ${deletedBook.title} deleted.` });
         } catch (err) {
             res.status(500).json({ message: err.message });
         }
     }
 }
 
-export default BooksController;
+export default BookController;

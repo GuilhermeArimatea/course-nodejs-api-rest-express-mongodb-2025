@@ -1,8 +1,9 @@
 import express from 'express';
-import booksRoutes from './books.routes.js';
-import authorsRoutes from './authors.routes.js';
+import bookRoutes from './book.routes.js';
+import authorRoutes from './author.routes.js';
+import publisherRoutes from './publisher.routes.js';
 
 const routes = express.Router();
-routes.use(booksRoutes, authorsRoutes);
+routes.use(bookRoutes, authorRoutes, publisherRoutes);
 
 export default routes;

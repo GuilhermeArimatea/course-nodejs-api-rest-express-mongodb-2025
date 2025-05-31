@@ -1,9 +1,9 @@
-import authors from "../models/author.model.js";
+import Author from "../models/author.model.js";
 
-class AuthorsController {
+class AuthorController {
     static findAuthors = async (req, res) => {
         try {
-            const authorList = await authors.find();
+            const authorList = await Author.find();
             res.status(200).json(authorList);
         } catch (err) {
             res.status(500).json({ message: err.message });
@@ -14,7 +14,7 @@ class AuthorsController {
         try {
             const id = req.params.id;
 
-            const author = await authors.findById(id);
+            const author = await Author.findById(id);
             if (!author) {
                 return res.status(404).json({ message: "author not found." });
             }
@@ -28,7 +28,7 @@ class AuthorsController {
         try {
             const body = req.body;
 
-            const newAuthor = new authors(body);
+            const newAuthor = new Author(body);
 
             const insertedAuthor = await newAuthor.save();
             res.status(201).json(insertedAuthor);
@@ -42,7 +42,7 @@ class AuthorsController {
             const id = req.params.id;
             const body = req.body;
 
-            const updatedAuthor = await authors.findByIdAndUpdate(
+            const updatedAuthor = await Author.findByIdAndUpdate(
                 id,
                 { $set: body },
                 { new: true, runValidators: true }
@@ -61,7 +61,7 @@ class AuthorsController {
         try {
             const id = req.params.id;
 
-            const deletedAuthor = await authors.findByIdAndDelete(id);
+            const deletedAuthor = await Author.findByIdAndDelete(id);
             if (!deletedAuthor) {
                 return res.status(400).json({ message: "author not found." });
             }
@@ -72,4 +72,4 @@ class AuthorsController {
     }
 }
 
-export default AuthorsController;
+export default AuthorController;
