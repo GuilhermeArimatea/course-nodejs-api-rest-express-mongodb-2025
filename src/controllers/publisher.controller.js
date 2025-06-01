@@ -3,8 +3,8 @@ import Publisher from "../models/publisher.model.js";
 class PublisherController {
     static findPublishers = async (req, res) => {
         try {
-            const publisherList = await Publisher.find();
-            res.status(200).json(publisherList);
+            const publishers = await Publisher.find();
+            res.status(200).json(publishers);
         } catch (err) {
             res.status(500).json({ message: err.message });
         }

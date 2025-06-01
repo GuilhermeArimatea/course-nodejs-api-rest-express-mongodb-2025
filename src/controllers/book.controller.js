@@ -3,11 +3,11 @@ import Book from "../models/book.model.js";
 class BookController {
     static findBooks = async (req, res) => {
         try {
-            const bookList = await Book.find()
+            const books = await Book.find()
                 .populate('author', 'name')
                 .populate('publisher', 'name')
                 .exec();
-            res.status(200).json(bookList);
+            res.status(200).json(books);
         } catch (err) {
             res.status(500).json({ message: err.message });
         }
@@ -19,6 +19,7 @@ class BookController {
 
             const book = await Book.findById(id)
                 .populate('author', 'name')
+                .populate('publisher', 'name')
                 .exec();
             if (!book) {
                 return res.status(404).json({ message: "Book not found." });
@@ -71,6 +72,23 @@ class BookController {
                 return res.status(400).json({ message: "Book not found." });
             }
             res.status(200).json({ message: `Book ${deletedBook.title} deleted.` });
+        } catch (err) {
+            res.status(500).json({ message: err.message });
+        }
+    }
+
+    static findBooksByPublisher = async (req, res) => {
+        try {
+            const publisherId = req.query.publisherId;
+
+            const books = await Book.find({ publisher: publisherId })
+                .populate('author', 'name')
+                .populate('publisher', 'name')
+                .exec();
+            if (books.length === 0) {
+                return res.status(204).json({ message: "No books found for this publisher." });
+            }
+            res.status(200).json(books);
         } catch (err) {
             res.status(500).json({ message: err.message });
         }
